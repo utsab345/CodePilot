@@ -15,6 +15,9 @@ dependencies = [
   "streamlit",
 ]
 
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
 [project.scripts]
 codepilot = "main:main"
 
