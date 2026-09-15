@@ -46,10 +46,6 @@ docker run --rm -p 8501:8501 --env-file .env codepilot
 
 The same image runs on Render, Railway, Fly.io, or any container platform.
 
-### Vercel portfolio
-
-The `portfolio/` directory is a static portfolio page designed for Vercel. In Vercel, import this repository and set **Root Directory** to `portfolio`; leave the framework preset as **Other** and deploy. The page links to the Streamlit application and source repository.
-
 Run tests:
 
 ```bash
