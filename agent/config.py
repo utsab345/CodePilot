@@ -11,6 +11,8 @@ class Settings:
     model: str = "openai/gpt-oss-120b"
     recursion_limit: int = 100
     debug: bool = False
+    provider: str = "groq"
+    api_base: str | None = None
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -22,6 +24,8 @@ class Settings:
             recursion_limit = 100
         return cls(
             model=os.getenv("CODEPILOT_MODEL", cls.model),
+            provider=os.getenv("CODEPILOT_PROVIDER", "groq").lower(),
+            api_base=os.getenv("CODEPILOT_API_BASE") or None,
             recursion_limit=recursion_limit,
             debug=os.getenv("CODEPILOT_DEBUG", "false").lower() in {"1", "true", "yes"},
         )

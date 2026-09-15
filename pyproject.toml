@@ -9,6 +9,7 @@ dependencies = [
   "langchain",
   "langchain-core",
   "langchain-groq",
+  "langchain-openai",
   "langgraph",
   "pydantic",
   "python-dotenv",

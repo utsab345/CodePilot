@@ -1,11 +1,11 @@
 from dotenv import load_dotenv
 from langchain.globals import set_verbose, set_debug
-from langchain_groq.chat_models import ChatGroq
 from langgraph.constants import END
 from langgraph.graph import StateGraph
 from langgraph.prebuilt import create_react_agent
 
 from agent.config import settings
+from agent.providers import create_chat_model
 from agent.prompt import architect_prompt, coder_system_prompt, planner_prompt
 from agent.states import CoderState, Plan, TaskPlan
 from agent.tools import get_current_directory, list_files, read_file, write_file
@@ -15,7 +15,7 @@ _ = load_dotenv()
 set_debug(settings.debug)
 set_verbose(settings.debug)
 
-llm = ChatGroq(model=settings.model)
+llm = create_chat_model()
 
 
 def planner_agent(state: dict) -> dict:

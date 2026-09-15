@@ -8,12 +8,15 @@ from agent.graph import agent
 
 st.set_page_config(page_title="CodePilot", page_icon="🚀", layout="wide")
 st.title("🚀 CodePilot")
-st.caption("Turn a product idea into an implementation plan and generated project.")
+st.caption("An agentic engineering workspace for planning, building, reviewing, and testing projects.")
 
 with st.sidebar:
     st.subheader("Runtime")
+    st.code(settings.provider, language="text")
     st.code(settings.model, language="text")
-    st.caption("Set GROQ_API_KEY in your environment before running.")
+    st.caption("Configure credentials and provider variables in Streamlit secrets or `.env`.")
+
+mode = st.selectbox("Workflow", ["Build project", "Create plan only", "Review workspace", "Explain architecture"])
 
 prompt = st.text_area(
     "What should CodePilot build?",
@@ -21,10 +24,18 @@ prompt = st.text_area(
     height=140,
 )
 
-if st.button("Generate project", type="primary", disabled=not prompt.strip()):
+button_labels = {
+    "Build project": "Generate project",
+    "Create plan only": "Create plan",
+    "Review workspace": "Review workspace",
+    "Explain architecture": "Explain",
+}
+button_label = button_labels[mode]
+if st.button(button_label, type="primary", disabled=not prompt.strip()):
     with st.status("Planning and implementing…", expanded=True) as status:
         try:
-            result = agent.invoke({"user_prompt": prompt.strip()}, {"recursion_limit": settings.recursion_limit})
+            workflow_prompt = f"[{mode}]\n{prompt.strip()}"
+            result = agent.invoke({"user_prompt": workflow_prompt}, {"recursion_limit": settings.recursion_limit})
             status.update(label="Project generated", state="complete")
             if result.get("plan"):
                 st.subheader("Plan")
