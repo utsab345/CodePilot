@@ -65,6 +65,12 @@ pytest
 
 Generated files are written under `generated_project/`. Commands run by the agent are bounded to 120 seconds and destructive patterns are rejected.
 
+## Workflows
+
+The dashboard exposes four workflows over the same graph: build a project end to end, create a plan without writing files, review an existing workspace, or explain the architecture. The model provider is selected at startup, so local OpenCode/Ollama-compatible endpoints can be used without changing agent code.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development checks and [SECURITY.md](SECURITY.md) for vulnerability reporting.
+
 ## License
 
 MIT
