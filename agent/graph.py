@@ -5,16 +5,17 @@ from langgraph.constants import END
 from langgraph.graph import StateGraph
 from langgraph.prebuilt import create_react_agent
 
-from agent.prompt import *
-from agent.states import *
-from agent.tools import *
+from agent.config import settings
+from agent.prompt import architect_prompt, coder_system_prompt, planner_prompt
+from agent.states import CoderState, Plan, TaskPlan
+from agent.tools import get_current_directory, list_files, read_file, write_file
 
 _ = load_dotenv()
 
-set_debug(True)
-set_verbose(True)
+set_debug(settings.debug)
+set_verbose(settings.debug)
 
-llm = ChatGroq(model="openai/gpt-oss-120b")
+llm = ChatGroq(model=settings.model)
 
 
 def planner_agent(state: dict) -> dict:
@@ -38,7 +39,6 @@ def architect_agent(state: dict) -> dict:
         raise ValueError("Planner did not return a valid response.")
 
     resp.plan = plan
-    print(resp.model_dump_json())
     return {"task_plan": resp}
 
 

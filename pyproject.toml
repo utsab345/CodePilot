@@ -1,0 +1,26 @@
+[project]
+name = "codepilot"
+version = "0.2.0"
+description = "A safety-aware, multi-agent coding project generator"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "groq",
+  "langchain",
+  "langchain-core",
+  "langchain-groq",
+  "langgraph",
+  "pydantic",
+  "python-dotenv",
+  "streamlit",
+]
+
+[project.scripts]
+codepilot = "main:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"

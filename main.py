@@ -2,18 +2,22 @@ import argparse
 import sys
 import traceback
 
+from agent.config import settings
 from agent.graph import agent
 
 
 def main():
     parser = argparse.ArgumentParser(description="Run engineering project planner")
-    parser.add_argument("--recursion-limit", "-r", type=int, default=100,
-                        help="Recursion limit for processing (default: 100)")
+    parser.add_argument("--recursion-limit", "-r", type=int, default=settings.recursion_limit,
+                        help=f"Recursion limit (default: {settings.recursion_limit})")
+    parser.add_argument("--prompt", "-p", help="Project prompt; otherwise read it interactively")
 
     args = parser.parse_args()
 
     try:
-        user_prompt = input("Enter your project prompt: ")
+        user_prompt = args.prompt or input("Enter your project prompt: ").strip()
+        if not user_prompt:
+            parser.error("a non-empty project prompt is required")
         result = agent.invoke(
             {"user_prompt": user_prompt},
             {"recursion_limit": args.recursion_limit}

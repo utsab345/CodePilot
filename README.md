@@ -1,53 +1,68 @@
-# 🚀 CodePilot – Your AI-Powered Coding Companion  
+# CodePilot
 
-> _"Code smarter, not harder."_  
+CodePilot is a safety-aware, multi-agent engineering assistant that turns a product brief into a structured plan, architecture tasks, and a generated project workspace.
 
-**CodePilot** is an intelligent coding companion designed to help developers brainstorm, debug, and build projects faster.  
-Whether you’re a beginner exploring logic or an expert refining architecture, CodeWhiz understands your intent and evolves with your workflow.
+## Why this is a senior-level project
 
----
+- **Planner → architect → coder pipeline** implemented with LangGraph.
+- **Typed contracts** between agents using Pydantic models.
+- **CLI and Streamlit dashboard** for automation and interactive use.
+- **Configurable model/runtime** through environment variables.
+- **Workspace sandboxing** that prevents path traversal and limits command execution time.
+- **Regression tests** for security boundaries and command timeouts.
 
-## 🧠 What Makes CodePilot Special  
+## Architecture
 
-- ⚡ **Real-time AI Coding Assistant** – Get instant solutions, suggestions, and optimizations.  
-- 🧩 **Modular Architecture** – Powered by LangGraph, LangChain, and Groq for flexible agent-based design.  
-- 🪄 **Prompt-Aware Intelligence** – Understands user intent through dynamic prompt engineering.  
-- 💾 **File-Smart** – Reads, edits, and organizes code intelligently.  
-- 🌐 **Interactive Dashboard** – Built with Streamlit for a seamless user experience.  
-- 🔍 **Multi-Agent Workflow** – Coder, Reviewer, and Builder agents work in harmony.  
+```text
+User brief ──> Planner (Plan) ──> Architect (TaskPlan) ──> Coder ──> generated_project/
+                                                        └── tools: read/write/list/run
+```
 
----
-
-## 🎥 Demo Video  
-
-📽️ **Watch the project in action:**  
-(https://drive.google.com/file/d/1Y_qIWifB7McCIHNEyiiTtOEcSSoYDvC6/view?usp=sharing)  
----
-### Architecture
-<img width="3840" height="448" alt="image" src="https://github.com/user-attachments/assets/a82d656a-a20e-4315-8dde-de4e0d6373e3" />
-
-## 🧩 Tech Stack  
-
-| Layer | Technology |
-|-------|-------------|
-| 💬 Core Engine | Python, LangGraph, LangChain, Groq |
-| 🧠 Model | ChatGroq (powered by LLaMA / Mixtral) |
-| 🗂️ Utilities | dotenv, os, subprocess |
-| 🧰 Testing | Pytest, Unittest |
-
----
-
-## ⚙️ Installation & Setup  
+## Quick start
 
 ```bash
-# 1️⃣ Clone the repository
 git clone https://github.com/utsab345/CodePilot.git
 cd CodePilot
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+cp .env.example .env
+# Edit .env and set GROQ_API_KEY
+```
 
-# 2️⃣ Create a virtual environment
-python -m venv venv
-source venv/bin/activate  # (Linux/Mac)
-venv\Scripts\activate     # (Windows)
+Run from the terminal:
 
-# 3️⃣ Install dependencies
-pip install -r requirements.txt
+```bash
+python main.py --prompt "Build a FastAPI task manager with a React frontend"
+```
+
+Run the dashboard:
+
+```bash
+streamlit run app.py
+```
+
+Run tests:
+
+```bash
+pytest
+```
+
+## Configuration
+
+| Variable | Purpose | Default |
+|---|---|---|
+| `GROQ_API_KEY` | Groq API credential | required |
+| `CODEPILOT_MODEL` | Chat model identifier | `openai/gpt-oss-120b` |
+| `CODEPILOT_RECURSION_LIMIT` | Maximum graph iterations (10–1000) | `100` |
+| `CODEPILOT_DEBUG` | Enable LangChain debug logging | `false` |
+
+Generated files are written under `generated_project/`. Commands run by the agent are bounded to 120 seconds and destructive patterns are rejected.
+
+## CV-ready summary
+
+> Built CodePilot, a typed LangGraph multi-agent system that converts natural-language product briefs into architecture plans and generated code. Added a Streamlit dashboard, configurable model runtime, workspace path isolation, bounded command execution, and automated security regression tests.
+
+## License
+
+MIT
