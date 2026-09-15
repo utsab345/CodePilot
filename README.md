@@ -2,18 +2,6 @@
 
 CodePilot is a safety-aware, multi-agent engineering assistant that turns a product brief into a structured plan, architecture tasks, and a generated project workspace.
 
-## Why this is a senior-level project
-
-- **Planner → architect → coder pipeline** implemented with LangGraph.
-- **Typed contracts** between agents using Pydantic models.
-- **CLI and Streamlit dashboard** for automation and interactive use.
-- **Configurable model/runtime** through environment variables.
-- **Workspace sandboxing** that prevents path traversal and limits command execution time.
-- **Regression tests** for security boundaries and command timeouts.
-- **Provider abstraction** for Groq, OpenAI, Ollama, vLLM, LiteLLM, and OpenCode-compatible endpoints.
-- **Professional workflows** for building, planning, reviewing, and explaining a workspace.
-- **Container-ready deployment** with a hardened Streamlit configuration and health probe.
-
 ## Architecture
 
 ```text
@@ -76,10 +64,6 @@ pytest
 | `CODEPILOT_DEBUG` | Enable LangChain debug logging | `false` |
 
 Generated files are written under `generated_project/`. Commands run by the agent are bounded to 120 seconds and destructive patterns are rejected.
-
-## CV-ready summary
-
-> Built CodePilot, a typed LangGraph multi-agent system that converts natural-language product briefs into architecture plans and generated code. Added a Streamlit dashboard, configurable model runtime, workspace path isolation, bounded command execution, and automated security regression tests.
 
 ## License
 
